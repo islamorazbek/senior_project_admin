@@ -1,0 +1,40 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.paper {
+  width: 80%;
+}
+
+.image {
+  width: 100%;
+}
+
+.gridContainer {
+  align-items: center;
+}
+
+.gridItem {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  padding: 5px;
+}
+
+.formContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: stretch;
+}
+
+.form {
+  height: 100%;
+  width: 80%;
+} 
