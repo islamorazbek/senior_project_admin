@@ -6,6 +6,7 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 type RouteType = {
     name: string;
@@ -20,7 +21,7 @@ export enum MyRoutes {
 
     PROFILE = "/app/profile",
     HOME = "/app",
-    POSTS = "/app/posts",
+    BLOGS = "/app/blogs",
     ORDERS = "/app/orders",
     CUSTOMERS = "/app/customers",
     FLIGHTS = "/app/flights",
@@ -35,6 +36,7 @@ export const privateRoute = [
 
 
 export const menuRoutes: RouteType[] = [
+    { name: "Blogs", path: MyRoutes.BLOGS, icon: AssignmentIcon },
     { name: "Ports", path: MyRoutes.PORTS, icon: FlightIcon },
     { name: "Orders", path: MyRoutes.ORDERS, icon: ArticleIcon },
     { name: "Customers", path: MyRoutes.CUSTOMERS, icon: PersonRoundedIcon },

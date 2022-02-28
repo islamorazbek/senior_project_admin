@@ -4,7 +4,7 @@ import React from 'react'
 type Props = {
   title: string;
   number: number;
-  proc: string;
+  proc?: string;
   img: string;
 }
 
@@ -19,9 +19,11 @@ const CustomCard: React.FC<Props> = ({ title, number, proc, img }) => {
           <Typography style={{ fontSize: "16px", fontWeight: "600" }}>
             {number}
           </Typography>
-          <Typography color={proc[0] === "-" ? "#E2007A" : "primary"} style={{ fontSize: "12px" }}>
-            {proc}
-          </Typography>
+          {proc &&
+            <Typography color={proc[0] === "-" ? "#E2007A" : "primary"} style={{ fontSize: "12px" }}>
+              {proc}
+            </Typography>
+          }
         </div>
       </CardContent >
       <CardMedia

@@ -11,11 +11,9 @@ import CustomersView from '../views/Customers';
 import FlightsView from '../views/Flights';
 import PortsView from '../views/Ports';
 import AnalyticsView from '../views/Analytics';
+import BlogsView from '../views/Blogs';
 
-type Props = {
-}
-
-const AdminPage: React.FC<Props> = ({ }) => {
+const AdminPage = () => {
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -24,16 +22,16 @@ const AdminPage: React.FC<Props> = ({ }) => {
       <Header />
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${240}px)` } }}
+        sx={{ flexGrow: 1, p: 3 }}
       >
         <Toolbar />
         <Routes>
+          <Route path={"blogs"} element={<BlogsView />} />
           <Route path={"orders"} element={<OrdersView />} />
           <Route path={"customers"} element={<CustomersView />} />
           <Route path={"flights"} element={<FlightsView />} />
           <Route path={"ports"} element={<PortsView />} />
           <Route path={"analytics"} element={<AnalyticsView />} />
-          {/*<Route path={Routes.SETTINGS} element={SettingsView} /> */}
           <Route
             path="*"
             element={<Navigate to="/app/ports" />}

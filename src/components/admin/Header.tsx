@@ -1,21 +1,17 @@
 import { AppBar, Avatar, IconButton, Toolbar, Typography } from '@mui/material'
 import React from 'react'
-import { authApi } from '../../redux/services/auth';
-import { setUser } from '../../redux/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../redux/store';
 import notification from '../../assets/icons/notifications.png';
+import { fetchUser } from '../../redux/auth/auth.action';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { user } = useTypedSelector(state => state.auth);
-  const { data: profile, isLoading, isError } = authApi.useGetMyProfileQuery('User');
+  const { user, loading, error } = useTypedSelector(state => state.auth);
 
   React.useEffect(() => {
-    if (profile) {
-      dispatch(setUser(profile));
-    }
-  }, [profile])
+    dispatch(fetchUser());
+  }, [])
 
   return (
     <AppBar
@@ -28,8 +24,8 @@ const Header = () => {
       }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        {isLoading && <Typography variant="caption">Loading...</Typography>}
-        {isError && <Typography variant="caption" color="secondary">Error occured while loading Profile info!</Typography>}
+        {loading && <Typography variant="caption">Loading...</Typography>}
+        {error && <Typography variant="caption" color="secondary">Error occured while loading Profile info!</Typography>}
         {user &&
           <div style={{ width: '25%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <IconButton aria-label="delete" size="small">

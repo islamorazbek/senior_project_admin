@@ -3,14 +3,15 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import styles from '../../assets/styles/auth.module.css';
-import { authApi } from '../../redux/services/auth';
-import { setTokens } from '../../redux/slices/authSlice';
+import { login } from '../../redux/auth/auth.action';
+import { useTypedSelector } from '../../redux/store';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [login, { isLoading, isError }] = authApi.useLoginMutation();
+  const { error, loading, isAuth } = useTypedSelector(state => state.auth);
 
   const formik = useFormik({
     initialValues: {
@@ -18,15 +19,15 @@ const LoginForm = () => {
       password: '123456'
     },
     onSubmit: async (values) => {
-      const response = await login(values);
-      if ("data" in response) {
-        dispatch(setTokens(response.data));
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('refresh_token', response.data.refresh_token);
-        navigate('/app')
-      }
+      dispatch(login(values))
     }
   })
+
+  React.useEffect(() => {
+    if(isAuth) {
+      navigate('/app/blogs')
+    }
+  }, [isAuth])
 
   const { values, handleChange, handleSubmit } = formik;
   const { email, password } = values;
@@ -37,13 +38,14 @@ const LoginForm = () => {
       <Typography variant="h5" gutterBottom>Sign in to continue!</Typography>
       <form onSubmit={handleSubmit} className={styles.form}>
         <TextField name="email" label="Email" variant="standard" value={email} onChange={handleChange} fullWidth margin="normal" required />
-        <TextField name="password" label="Password" variant="standard" value={password} onChange={handleChange} fullWidth margin="normal" required />
-        <Button variant="outlined" type="submit" fullWidth color="primary" size="large" disabled={isLoading}>Log In</Button>
-        {isError && <Typography variant="caption" gutterBottom>Error occured. Try later!</Typography>}
-        <Typography variant="subtitle1" gutterBottom>Forgot your password?</Typography>
+        <TextField name="password" type="password" label="Password" variant="standard" value={password} onChange={handleChange} fullWidth margin="normal" required />
+        <Button variant="outlined" type="submit" fullWidth color="primary" size="large" disabled={loading}>Log In</Button>
+        {error && <Typography variant="caption" gutterBottom>Error occured. Try later!</Typography>}
+        <Link to='/verify'>
+          <Typography component='a' color='black' gutterBottom>Forgot your password?</Typography>
+        </Link>
       </form>
     </div>
-
   )
 }
 
