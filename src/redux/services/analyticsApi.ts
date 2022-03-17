@@ -21,7 +21,12 @@ export const analyticsApi = createApi({
       }),
       providesTags: ['Destinations']
     }),
+    getPopularBlogs: builder.query<object, string>({
+      query: () => ({
+        url: '/analytics/popular-blogs'
+      })
+    })
   })
 })
 
-export const { useGetPopularDestinationsQuery, useGetEarningsQuery } = analyticsApi;
+export const { useGetPopularDestinationsQuery, useGetEarningsQuery, useGetPopularBlogsQuery } = analyticsApi;

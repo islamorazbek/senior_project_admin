@@ -7,7 +7,8 @@ import EarningsCard from '../components/analytics/EarningsCard';
 import ReviewsCard from '../components/analytics/ReviewsCard';
 import { cardData, graphData, graphOptions, graphType } from '../tempData/analyticsData';
 import dollar from '../assets/icons/dollar.png';
-import { useGetEarningsQuery, useGetPopularDestinationsQuery } from '../redux/services/analyticsApi';
+import { useGetEarningsQuery, useGetPopularBlogsQuery, useGetPopularDestinationsQuery } from '../redux/services/analyticsApi';
+import BlogsCard from '../components/analytics/BlogsCard';
 
 const AnalyticsView = () => {
   const [query, setQuery] = React.useState<{ from: string, to: string }>({ from: '', to: '' });
@@ -17,6 +18,8 @@ const AnalyticsView = () => {
     { refetchOnMountOrArgChange: true }
   );
 
+  const { data: blogsData, isLoading: isBlogsLoading, isFetching: isBlogsFetching } = useGetPopularBlogsQuery('');
+
   const { data: destinationsData, isLoading: isDestinationsLoading, isFetching: isDestinationsFetching } = useGetPopularDestinationsQuery(
     { from: !from ? '' : from.concat('T00:00:00Z'), to: !to ? '' : to.concat('T00:00:00Z') },
     { refetchOnMountOrArgChange: true }
@@ -25,8 +28,10 @@ const AnalyticsView = () => {
   const isLoading = () => {
     return isEarningsLoading
       || isDestinationsLoading
+      || isBlogsLoading
       || isEarningFetching
       || isDestinationsFetching
+      || isBlogsFetching
   }
 
   return (
@@ -77,7 +82,6 @@ const AnalyticsView = () => {
         </Paper>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', gridGap: '20px' }}>
-        <ReviewsCard />
         {isLoading() ?
           <div style={{ display: 'grid', gridTemplateColumns: 'auto auto', gridGap: '5px' }}>
             <Skeleton height={'100px'} width={'120px'} sx={{ m: 0 }} />
@@ -88,8 +92,12 @@ const AnalyticsView = () => {
             <Skeleton height={'100px'} width={'120px'} sx={{ m: 0 }} />
           </div>
           :
-          destinationsData &&
-          <DestinationsCard data={destinationsData} />
+          destinationsData && blogsData &&
+          <>
+            <ReviewsCard />
+            <BlogsCard data={blogsData} />
+            <DestinationsCard data={destinationsData} />
+          </>
         }
         <EarningsCard />
       </div>

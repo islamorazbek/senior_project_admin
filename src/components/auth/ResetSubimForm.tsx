@@ -34,8 +34,8 @@ const ResetSubmitForm: React.FC = () => {
       <Typography variant="h4" color="primary" textAlign="center" gutterBottom>Want to change your password?</Typography>
       <form onSubmit={handleSubmit} className={styles.form}>
         <TextField name="email" label="Email" variant="standard" value={email} onChange={handleChange} fullWidth margin="normal" required />
-        <TextField name="password" label="New Password" variant="standard" value={password} onChange={handleChange} fullWidth margin="normal" required />
-        <TextField name="repeatPassword" label="Repeat Passwort" variant="standard" value={repeatPassword} onChange={handleChange} fullWidth margin="normal" required />
+        <TextField name="password" type="password" label="New Password" variant="standard" value={password} onChange={handleChange} fullWidth margin="normal" required />
+        <TextField name="repeatPassword" type="password" label="Repeat Passwort" variant="standard" value={repeatPassword} onChange={handleChange} fullWidth margin="normal" required />
         <Button variant="outlined" type="submit" fullWidth color="primary" size="large" disabled={loading}>Change password</Button>
         {error && <Typography variant="caption" gutterBottom>Error occured. Try later!</Typography>}
       </form>
