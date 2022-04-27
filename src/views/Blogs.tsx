@@ -8,6 +8,7 @@ import { IBlog, IBlogNew } from '../redux/types/IBlog';
 const mapping = {
   'id': "#ID",
   'title': "Title",
+  'image': "Image",
   'is_active': "Active",
   'created_at': "Created",
   'updated_at': "Updated"

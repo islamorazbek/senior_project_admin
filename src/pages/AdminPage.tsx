@@ -12,6 +12,9 @@ import FlightsView from '../views/Flights';
 import PortsView from '../views/Ports';
 import AnalyticsView from '../views/Analytics';
 import BlogsView from '../views/Blogs';
+import SubsriptionsView from '../views/Subscription';
+import SettingsView from '../views/Settings';
+import PromocodesView from '../views/Promocodes';
 
 const AdminPage = () => {
 
@@ -29,9 +32,12 @@ const AdminPage = () => {
           <Route path={"blogs"} element={<BlogsView />} />
           <Route path={"orders"} element={<OrdersView />} />
           <Route path={"customers"} element={<CustomersView />} />
+          <Route path={"promocodes"} element={<PromocodesView />} />
+          <Route path={"subscriptions"} element={<SubsriptionsView />} />
           <Route path={"flights"} element={<FlightsView />} />
           <Route path={"ports"} element={<PortsView />} />
           <Route path={"analytics"} element={<AnalyticsView />} />
+          <Route path={"settings"} element={<SettingsView />} />
           <Route
             path="*"
             element={<Navigate to="/app/ports" />}

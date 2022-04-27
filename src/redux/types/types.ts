@@ -108,3 +108,50 @@ export interface IPrice {
   updated_at: string
 }
 
+export interface INewPromo {
+  condition: any,
+  start_date: string,
+  end_date: string,
+  is_active: boolean,
+  limit: number,
+  name: string,
+  profit: {
+    amount: number,
+    type: "FIXED"
+  }
+}
+
+export interface IPromo {
+  id: number,
+  condition: any,
+  start_date: Date,
+  end_date: Date,
+  is_active: boolean,
+  limit: number,
+  name: string,
+  profit: {
+    amount: number,
+    type: "FIXED"
+  },
+  created_at: string,
+  updated_at: string
+}
+
+export interface IPromoResponse {
+  count: number,
+  promocodes: IPromo[]
+}
+
+export interface IMessage {
+  created_at: string,
+  email: string,
+  id: string,
+  is_processed: boolean,
+  message: string,
+  name: string
+}
+
+export interface IMessagesResponse {
+  count: number,
+  messages: IMessage[]
+}

@@ -9,6 +9,8 @@ import { portApi } from './services/port';
 import { priceApi } from './services/price';
 import { profileApi } from './services/profile';
 import auth from './auth/auth.slice';
+import { subscriptionsApi } from './services/subcriptions';
+import { promocodesApi } from './services/promocodes';
 
 const rootReducer = combineReducers({
   auth,
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
   [priceApi.reducerPath]: priceApi.reducer,
   [profileApi.reducerPath]: profileApi.reducer,
   [blogsApi.reducerPath]: blogsApi.reducer,
-  [analyticsApi.reducerPath]: analyticsApi.reducer
+  [analyticsApi.reducerPath]: analyticsApi.reducer,
+  [subscriptionsApi.reducerPath]: subscriptionsApi.reducer,
+  [promocodesApi.reducerPath]: promocodesApi.reducer
 })
 
 export const store = configureStore({
@@ -31,7 +35,9 @@ export const store = configureStore({
       blogsApi.middleware,
       profileApi.middleware,
       priceApi.middleware,
-      analyticsApi.middleware
+      analyticsApi.middleware,
+      subscriptionsApi.middleware,
+      promocodesApi.middleware
     ),
 })
 

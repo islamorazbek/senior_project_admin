@@ -16,7 +16,7 @@ const BlogsCard: React.FC<Props> = ({ data }) => {
   return (
     <Card sx={{ minWidth: 275, minHeight: "180px", boxShadow: '0px 2px 12px rgba(37, 51, 66, 0.15)' }}>
       <CardContent>
-        <Typography sx={{ fontSize: "16px", fontWeight: "bold" }} gutterBottom>
+        <Typography sx={{ fontSize: "16px",  fontWeight: "bold" }} gutterBottom>
           Popular Blogs
         </Typography>
         <div>

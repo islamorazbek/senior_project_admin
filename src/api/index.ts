@@ -9,7 +9,7 @@ export const $api = axios.create({
 })
 
 $api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('one_access_token');
 
     if (config && config.headers && token) {
         config.headers.Authorization = `Bearer ${token}`
@@ -25,7 +25,7 @@ $api.interceptors.response.use(config => {
         originalRequest._isRetry = true
          try {
             const response = await AuthService.refresh();
-            localStorage.setItem('access_token', response.data.access_token)
+            localStorage.setItem('one_access_token', response.data.access_token)
             return $api.request(originalRequest)
         } catch (e) {
             console.log("User not authorized")

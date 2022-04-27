@@ -7,6 +7,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import QrCodeIcon from '@mui/icons-material/QrCode';
 
 type RouteType = {
     name: string;
@@ -24,10 +25,12 @@ export enum MyRoutes {
     BLOGS = "/app/blogs",
     ORDERS = "/app/orders",
     CUSTOMERS = "/app/customers",
+    PROMOCODES = "/app/promocodes",
     FLIGHTS = "/app/flights",
     ANALYTICS = "/app/analytics",
     SETTINGS = "/app/settings",
-    PORTS = "/app/ports"
+    PORTS = "/app/ports",
+    SUBSCRIPTIONS = "/app/subscriptions"
 }
 
 export const privateRoute = [
@@ -40,9 +43,11 @@ export const menuRoutes: RouteType[] = [
     { name: "Ports", path: MyRoutes.PORTS, icon: FlightIcon },
     { name: "Orders", path: MyRoutes.ORDERS, icon: ArticleIcon },
     { name: "Customers", path: MyRoutes.CUSTOMERS, icon: PersonRoundedIcon },
+    { name: "Promocodes", path: MyRoutes.PROMOCODES, icon: QrCodeIcon },
+    { name: "Subscriptions", path: MyRoutes.SUBSCRIPTIONS, icon: PersonRoundedIcon },
     // { name: "Flights", path: MyRoutes.FLIGHTS, icon: AirplaneTicketIcon },
     { name: "Analyitcs", path: MyRoutes.ANALYTICS, icon: AnalyticsIcon },
-    // { name: "Settings", path: MyRoutes.SETTINGS, icon: SettingsIcon },
+    { name: "Settings", path: MyRoutes.SETTINGS, icon: SettingsIcon },
 ]
 
 export const publicRoute = []

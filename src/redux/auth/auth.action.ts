@@ -7,7 +7,7 @@ export const login = createAsyncThunk<ILoginResponse, ILogin>(
     async function (creds, { rejectWithValue }) {
         try {
             const response = await AuthService.login(creds);
-            localStorage.setItem('access_token', response.data.access_token);
+            localStorage.setItem('one_access_token', response.data.access_token);
             return response.data;
         } catch (e) {
             return rejectWithValue(e);
@@ -20,7 +20,7 @@ export const refresh = createAsyncThunk<ILoginResponse>(
     async function (_, { rejectWithValue }) {
         try {
             const response = await AuthService.refresh();
-            localStorage.setItem('access_token', response.data.access_token);
+            localStorage.setItem('one_access_token', response.data.access_token);
             return response.data;
         } catch (e) {
             return rejectWithValue(e);
@@ -32,8 +32,8 @@ export const logout = createAsyncThunk<ILoginResponse>(
     'auth/logout',
     async function (_, { rejectWithValue }) {
         try {
+            localStorage.removeItem('one_access_token');
             const response = await AuthService.logout();
-            localStorage.removeItem('access_token');
             return response.data;
         } catch (e) {
             return rejectWithValue(e);
@@ -48,7 +48,7 @@ export const fetchUser = createAsyncThunk<IUser>(
             const response = await AuthService.fetchProfile();
             return response.data;
         } catch (e) {
-            localStorage.removeItem('access_token');
+            localStorage.removeItem('one_access_token');
             return rejectWithValue(e);
         }
     }
@@ -60,7 +60,7 @@ export const updatePassword = createAsyncThunk<void, { oldPassword: string, newP
         try {
             await AuthService.updatePassword(oldPassword, newPassword);
         } catch (e) {
-            localStorage.removeItem('access_token');
+            localStorage.removeItem('one_access_token');
             return rejectWithValue(e);
         }
     }

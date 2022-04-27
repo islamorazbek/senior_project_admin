@@ -1,7 +1,7 @@
 import { Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import React from 'react';
-import { useCreateBlogMutation, useEditBlogMutation } from '../../redux/services/blogs';
+import React, { useState } from 'react';
+import { useCreateBlogMutation, useDeleteBlogMutation, useEditBlogMutation } from '../../redux/services/blogs';
 import { IBlog, IBlogNew } from '../../redux/types/IBlog';
 
 type Props = {
@@ -13,11 +13,15 @@ type Props = {
 const BlogDialog: React.FC<Props> = ({ open, initialData, handleClose }) => {
   const [createBlog, { isLoading: createLoading, isError: createError, status: createStatus }] = useCreateBlogMutation();
   const [editBlog, { isLoading: editLoading, isError: editError, status: editStatus }] = useEditBlogMutation();
+  const [deleteBlog, { isLoading: deleteLoading, isError: deleteError, status: deleteStatus }] = useDeleteBlogMutation();
+
+  const [isDeletable, setIsDeletable] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       title: '',
       content: '',
+      image: '',
       is_active: false
     },
     onSubmit: (values) => {
@@ -29,8 +33,14 @@ const BlogDialog: React.FC<Props> = ({ open, initialData, handleClose }) => {
     },
   })
 
+  const handleDelete = () => {
+    if (initialData?.id) {
+      deleteBlog(initialData?.id);
+    }
+  }
+
   React.useEffect(() => {
-    if (createStatus === 'fulfilled' || editStatus === 'fulfilled') {
+    if (createStatus === 'fulfilled' || editStatus === 'fulfilled' || deleteStatus === 'fulfilled') {
       handleClose();
     }
   }, [createStatus, editStatus])
@@ -38,18 +48,20 @@ const BlogDialog: React.FC<Props> = ({ open, initialData, handleClose }) => {
   React.useEffect(() => {
     if (initialData) {
       formik.setValues(initialData)
+      setIsDeletable(true)
     } else {
       formik.setValues({
         title: '',
         content: '',
+        image: '',
         is_active: false
       })
-
+      setIsDeletable(false)
     }
   }, [initialData])
 
   const { values, handleChange, handleSubmit } = formik;
-  const { title, content, is_active } = values;
+  const { title, content, image, is_active } = values;
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -86,12 +98,23 @@ const BlogDialog: React.FC<Props> = ({ open, initialData, handleClose }) => {
             rows={6}
             fullWidth
           />
+          <TextField
+            name="image"
+            value={image}
+            onChange={handleChange}
+            required
+            label="Image Link"
+            variant="outlined"
+            margin="normal"
+            fullWidth
+          />
           <FormControlLabel
             control={
               <Checkbox checked={is_active} onChange={handleChange} name="is_active" />
             }
             label="Active"
           />
+          {isDeletable && <Button variant="contained" sx={{ background: '#E2007A', color: '#FFFFFF', boxShadow: 0}} onClick={handleDelete} disabled={editLoading || createLoading || deleteLoading}>Delete</Button>}
           {
             (createError || editError) &&
             < Typography color="error" variant="caption">
